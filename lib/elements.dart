@@ -19,9 +19,9 @@ class Elements {
   final List<Element> _elements = [];
   List<Element> get elements => _elements;
 
-  load(String path) async {
+  load(String path) {
     var file = File(path);
-    var contents = await file.readAsString();
+    var contents = file.readAsStringSync();
     var lines = contents.split('\n');
     lines.removeAt(0);
     for (var line in lines) {

@@ -1,5 +1,5 @@
-import 'package:app/app.dart' as app;
+import 'package:app/elements.dart';
 
 void main(List<String> arguments) {
-  print('Hello world: ${app.calculate()}!');
+  Elements();
 }
