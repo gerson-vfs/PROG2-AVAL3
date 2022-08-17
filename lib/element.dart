@@ -1,8 +1,13 @@
 class Element {
   String symbol;
-  String portugueseName;
+  String name;
   String latimName;
   int atomicNumber;
 
-  Element(this.symbol, this.portugueseName, this.latimName, this.atomicNumber);
+  Element(
+    this.atomicNumber,
+    this.symbol,
+    this.name,
+    this.latimName,
+  );
 }
