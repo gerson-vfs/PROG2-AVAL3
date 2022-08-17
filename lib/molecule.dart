@@ -1,11 +1,11 @@
 import 'package:app/atom.dart';
 import 'package:app/element.dart';
-import 'package:app/elements.dart';
 
 class Molecule implements Comparable<Molecule> {
   late Map<Element, int> _elements;
+  late String _name;
 
-  Molecule(String formula) {
+  Molecule({required String formula, required String name}) {
     this.formula = formula;
   }
 
@@ -17,8 +17,17 @@ class Molecule implements Comparable<Molecule> {
     return join(_elements);
   }
 
-  int get weight =>
-      _elements.keys.fold(0, (sum, element) => sum + element.atomicNumber);
+  String get name => _name;
+
+  int get weight {
+    var total = 0;
+
+    _elements.forEach((element, count) {
+      total += element.weight * count;
+    });
+
+    return total;
+  }
 
   @override
   int compareTo(Molecule other) {
@@ -26,29 +35,58 @@ class Molecule implements Comparable<Molecule> {
   }
 
   static Map<Element, int> split(String formula) {
+    if (formula.isEmpty) {
+      return {};
+    }
+
+    isInt(String text) {
+      return int.tryParse(text) != null;
+    }
+
+    isLowerCase(String text) {
+      return text.toLowerCase() == text;
+    }
+
     Map<Element, int> elements = {};
 
-    for (var element in formula.split("")) {
-      if (int.tryParse(element) != null) {
-        elements[elements.entries.last.key] = int.parse(
-            elements.entries.last.value == 0
-                ? element
-                : elements.entries.last.value.toString() + element);
-      } else {
-        if (elements.isNotEmpty) {
-          if (elements.entries.last.value == 0) {
-            elements[elements.entries.last.key] = 1;
+    String atom = "";
+
+    for (var i = 0; i < formula.length; i++) {
+      atom += formula[i];
+
+      if (i + 1 < formula.length) {
+        var next = formula[i + 1];
+        if (!isInt(next)) {
+          if (isLowerCase(next)) {
+            atom += next;
+            i++;
           }
         }
+      }
 
-        elements[Atom(element).element] = 0;
+      if (i + 1 < formula.length) {
+        var current = formula[i];
+        var next = formula[i + 1];
+        if (!isInt(current) && !isInt(next)) {
+          atom += "1 ";
+        }
+
+        if (isInt(current) && !isInt(next)) {
+          atom += " ";
+        }
+      } else {
+        var current = formula[i];
+        if (!isInt(current)) {
+          atom += "1";
+        }
       }
     }
 
-    if (elements.isNotEmpty) {
-      if (elements.entries.last.value == 0) {
-        elements[elements.entries.last.key] = 1;
-      }
+    for (var atom in atom.split(" ")) {
+      var element = atom.split(RegExp(r'\d+'))[0];
+      var count = atom.split(RegExp(r'[A-z]+'))[1];
+
+      elements[Atom(element).element] = int.parse(count);
     }
 
     return elements;
