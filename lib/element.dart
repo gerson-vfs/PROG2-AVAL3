@@ -1,11 +1,11 @@
 class Element {
+  int weight;
   String symbol;
   String name;
   String latinName;
-  int atomicNumber;
 
   Element(
-    this.atomicNumber,
+    this.weight,
     this.symbol,
     this.name,
     this.latinName,
