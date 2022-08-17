@@ -8,7 +8,7 @@
       "name": "PROG2-AVAL3",
       "request": "launch",
       "type": "dart",
-      "program": "bin/app.dart",
+      "program": "main.dart",
     }
   ]
 }
