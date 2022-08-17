@@ -10,4 +10,9 @@ class Element {
     this.name,
     this.latinName,
   );
+
+  @override
+  String toString() {
+    return symbol;
+  }
 }
