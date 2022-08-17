@@ -19,6 +19,10 @@ class Elements {
   final List<Element> _elements = [];
   List<Element> get elements => _elements;
 
+  void forEach(void Function(Element) f) {
+    _elements.forEach(f);
+  }
+
   load(String path) {
     var file = File(path);
     var contents = file.readAsStringSync();
