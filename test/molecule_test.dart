@@ -1,63 +1,67 @@
 import 'package:app/atom.dart';
+import 'package:app/element.dart';
+import 'package:app/elements.dart';
 import 'package:app/molecule.dart';
 import 'package:test/test.dart';
 
 void main() {
+  Elements();
+
   test('Molecule.join(C8H10N4O2)', () {
-    Map<Atom, int> atoms = {};
+    Map<Element, int> elemnts = {};
 
-    atoms[Atom("C")] = 8;
-    atoms[Atom("H")] = 10;
-    atoms[Atom("N")] = 4;
-    atoms[Atom("O")] = 2;
+    elemnts[Atom("C").element] = 8;
+    elemnts[Atom("H").element] = 10;
+    elemnts[Atom("N").element] = 4;
+    elemnts[Atom("O").element] = 2;
 
-    expect(Molecule.join(atoms), "C8H10N4O2"); // caffeine
+    expect(Molecule.join(elemnts), "C8H10N4O2"); // caffeine
   });
 
   test('Molecule.join(O2)', () {
-    Map<Atom, int> atoms = {};
+    Map<Element, int> elemnts = {};
 
-    atoms[Atom("O")] = 2;
+    elemnts[Atom("O").element] = 2;
 
-    expect(Molecule.join(atoms), "O2");
+    expect(Molecule.join(elemnts), "O2");
   });
 
   test('Molecule.join(H2O)', () {
-    Map<Atom, int> atoms = {};
+    Map<Element, int> elemnts = {};
 
-    atoms[Atom("H")] = 2;
-    atoms[Atom("O")] = 1;
+    elemnts[Atom("H").element] = 2;
+    elemnts[Atom("O").element] = 1;
 
-    expect(Molecule.join(atoms), "H2O");
+    expect(Molecule.join(elemnts), "H2O");
   });
 
   test('Molecule.join(NaCl)', () {
-    Map<Atom, int> atoms = {};
+    Map<Element, int> elemnts = {};
 
-    atoms[Atom("Na")] = 1;
-    atoms[Atom("Cl")] = 1;
+    elemnts[Atom("Na").element] = 1;
+    elemnts[Atom("Cl").element] = 1;
 
-    expect(Molecule.join(atoms), "NaCl");
+    expect(Molecule.join(elemnts), "NaCl");
   });
 
   test('Molecule.join(H2SO4)', () {
-    Map<Atom, int> atoms = {};
+    Map<Element, int> elemnts = {};
 
-    atoms[Atom("H")] = 2;
-    atoms[Atom("S")] = 1;
-    atoms[Atom("O")] = 4;
+    elemnts[Atom("H").element] = 2;
+    elemnts[Atom("S").element] = 1;
+    elemnts[Atom("O").element] = 4;
 
-    expect(Molecule.join(atoms), "H2SO4");
+    expect(Molecule.join(elemnts), "H2SO4");
   });
 
   test('Molecule.join(C6H12O6)', () {
-    Map<Atom, int> atoms = {};
+    Map<Element, int> elemnts = {};
 
-    atoms[Atom("C")] = 6;
-    atoms[Atom("H")] = 12;
-    atoms[Atom("O")] = 6;
+    elemnts[Atom("C").element] = 6;
+    elemnts[Atom("H").element] = 12;
+    elemnts[Atom("O").element] = 6;
 
-    expect(Molecule.join(atoms), "C6H12O6");
+    expect(Molecule.join(elemnts), "C6H12O6");
   });
 
   test("Molecule.split(C8H10N4O2)", () {

@@ -1,65 +1,67 @@
 import 'package:app/atom.dart';
+import 'package:app/element.dart';
+import 'package:app/elements.dart';
 
 class Molecule implements Comparable<Molecule> {
-  late Map<Atom, int> _atoms;
+  late Map<Element, int> _elements;
 
   Molecule(String formula) {
     this.formula = formula;
   }
 
   set formula(String formula) {
-    _atoms = split(formula);
+    _elements = split(formula);
   }
 
   String get formula {
-    return join(_atoms);
+    return join(_elements);
   }
 
-  int get weight {
-    throw UnimplementedError();
-  }
+  int get weight =>
+      _elements.keys.fold(0, (sum, element) => sum + element.atomicNumber);
 
   @override
   int compareTo(Molecule other) {
-    throw UnimplementedError();
+    return weight.compareTo(other.weight);
   }
 
-  static Map<Atom, int> split(String formula) {
-    Map<Atom, int> atoms = {};
+  static Map<Element, int> split(String formula) {
+    Map<Element, int> elements = {};
 
-    for (var atom in formula.split("")) {
-      if (int.tryParse(atom) != null) {
-        atoms[atoms.entries.last.key] = int.parse(atoms.entries.last.value == 0
-            ? atom
-            : atoms.entries.last.value.toString() + atom);
+    for (var element in formula.split("")) {
+      if (int.tryParse(element) != null) {
+        elements[elements.entries.last.key] = int.parse(
+            elements.entries.last.value == 0
+                ? element
+                : elements.entries.last.value.toString() + element);
       } else {
-        if (atoms.isNotEmpty) {
-          if (atoms.entries.last.value == 0) {
-            atoms[atoms.entries.last.key] = 1;
+        if (elements.isNotEmpty) {
+          if (elements.entries.last.value == 0) {
+            elements[elements.entries.last.key] = 1;
           }
         }
 
-        atoms[Atom(atom)] = 0;
+        elements[Atom(element).element] = 0;
       }
     }
 
-    if (atoms.isNotEmpty) {
-      if (atoms.entries.last.value == 0) {
-        atoms[atoms.entries.last.key] = 1;
+    if (elements.isNotEmpty) {
+      if (elements.entries.last.value == 0) {
+        elements[elements.entries.last.key] = 1;
       }
     }
 
-    return atoms;
+    return elements;
   }
 
-  static String join(Map<Atom, int> atoms) {
+  static String join(Map<Element, int> elements) {
     String formula = '';
 
-    for (var atom in atoms.entries) {
-      formula += atom.key.symbol;
+    for (var element in elements.entries) {
+      formula += element.key.symbol;
 
-      if (atom.value > 1) {
-        formula += atom.value.toString();
+      if (element.value > 1) {
+        formula += element.value.toString();
       }
     }
 

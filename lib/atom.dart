@@ -1,6 +1,8 @@
 import 'package:app/Elements.dart';
 import 'package:app/errors/invalid_symbol.dart';
 
+import 'element.dart';
+
 class Atom {
   final String symbol;
   Atom(this.symbol) {
@@ -8,6 +10,9 @@ class Atom {
       throw InvalidSymbolError(symbol);
     }
   }
+
+  Element get element =>
+      Elements().elements.firstWhere((element) => element.symbol == symbol);
 
   static bool isValid(String symbol) {
     final elements = Elements();
